@@ -27,6 +27,7 @@
       :style="{ 'padding-left': (node.level - 1) * tree.indent + 'px' }">
       <span
         @click.stop="handleExpandIconClick"
+        v-if = "beforeOrAfter"
         :class="[
           { 'is-leaf': node.isLeaf, expanded: !node.isLeaf && expanded },
           'el-tree-node__expand-icon',
@@ -48,6 +49,16 @@
         class="el-tree-node__loading-icon el-icon-loading">
       </span>
       <node-content :node="node"></node-content>
+      <span
+        @click.stop="handleExpandIconClick"
+        v-if = "!beforeOrAfter"
+        :class="[
+          { 'is-leaf': node.isLeaf, expanded: !node.isLeaf && expanded },
+          'el-tree-node__expand-icon',
+          tree.iconClass ? tree.iconClass : 'el-icon-caret-right'
+        ]"
+      >
+      </span>
     </div>
     <el-collapse-transition>
       <div
@@ -64,6 +75,7 @@
           :show-checkbox="showCheckbox"
           :key="getNodeKey(child)"
           :node="child"
+          :before-or-after = "beforeOrAfter"
           @node-expand="handleChildNodeExpand">
         </el-tree-node>
       </div>
@@ -96,10 +108,14 @@
         type: Boolean,
         default: true
       },
+      beforeOrAfter: {
+        type: Boolean,
+        default: true
+      },
       showCheckbox: {
         type: Boolean,
         default: false
-      }
+      },
     },
 
     components: {

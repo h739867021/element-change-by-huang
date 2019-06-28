@@ -17,6 +17,7 @@
       :show-checkbox="showCheckbox"
       :key="getNodeKey(child)"
       :render-content="renderContent"
+      :before-or-after = "beforeOrAfter"
       @node-expand="handleNodeExpand">
     </el-tree-node>
     <div class="el-tree__empty-block" v-if="isEmpty">
@@ -104,6 +105,10 @@
       draggable: {
         type: Boolean,
         default: false
+      },
+      beforeOrAfter: {
+        type: Boolean,
+        default: true
       },
       allowDrag: Function,
       allowDrop: Function,
